@@ -20,12 +20,14 @@ def decode(compressed):
     compressed = list(compressed)
     structure = []
     index = 0
-    while index < len(compressed):
-        try:
-            occurences = int(compressed[index])
-            structure.append(compressed[index + 1] * occurences)  # doesn't work if number is more than one digit
-            index += 1
-        except ValueError:
+    while index < len(compressed):         # `while` loop so that index is mutable
+        if compressed[index].isdigit():  
+            occurences = []                # put number in mutable list, not immutable string. allows it to be arbitrary digits.
+            while compressed[index].isdigit():
+                occurences.append(compressed[index])
+                index += 1
+            structure.append(compressed[index] * int("".join(occurences)))
+        else:
             structure.append(compressed[index])
         index += 1
     return "".join(structure)

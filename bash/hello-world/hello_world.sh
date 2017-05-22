@@ -1,2 +1,8 @@
 #!/usr/bin/env bash
-echo Hello, World!
+
+if [[ $@ ]] ; then
+    name=$@
+else
+    name="World"
+fi
+echo "Hello, $name!"
