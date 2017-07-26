@@ -6,7 +6,6 @@ values = { 0: "zero", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "
 
 def say(n):
     """Given an integer, return it as a phrase"""
-    phrase = []
     if 0 > n or abs(n) >= 1e12 or type(n) not in (int, float):    # 1e12 == one trillion
         raise AttributeError(n)
     elif n in values:
@@ -14,9 +13,10 @@ def say(n):
             return "one " + values[n]
         return values[n]
     elif n < 100:
-        return " ".join(say_under_100(n))
+        return "".join(say_under_100(n))
     elif n < 1000:
         return " ".join(say_under_1000(n))
+    phrase = []
     for seq in split_num(n):    # string
         phrase += say_under_1000(seq)
     return " ".join(phrase)
@@ -35,11 +35,11 @@ def split_num(n):
             
 def say_under_100(n):   # takes a int
     if n == 14 or n in range(16, 20):
-        return values[int(str(n)[1])] + "teen"
-    elif n in values:
-        return values[n]
+        return [values[int(str(n)[1])] + "teen"]
+    elif n in values or n < 20:
+        return [values[n]]
     else:
-        return values[int(str(n)[0]) * 10] + "-" + values[int(str(n)[1])]
+        return [values[int(str(n)[0]) * 10] + "-" + values[int(str(n)[1])]]
         # append first digit and second digit
 
 def say_under_1000(n):  # takes an int or string
@@ -47,7 +47,7 @@ def say_under_1000(n):  # takes an int or string
     if n < 100:
         return say_under_100(n)
     phrase = []
-    first = int(str(n)[0])
+    first = int(str(n)[0])  # first digit
     phrase.append(values[first])
     if values[first] == 1:
         phrase.append("one")
