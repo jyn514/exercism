@@ -1,0 +1,4 @@
+java/*/build
+java/*/.gradle
+haskell/*/.stack-work
+haskell/.stack-work
